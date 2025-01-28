@@ -1,0 +1,49 @@
+name: Sort Domain Suffixes
+
+on:
+  push:
+    paths:
+      - 'us-proxy.txt'  # 请替换为实际文件路径
+
+jobs:
+  sort-domains:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 确保可以执行 git 操作
+
+    - name: Sort domains
+      run: |
+        # 处理文件三步曲：
+        # 1. 移除前缀 2. 排序 3. 重新添加前缀
+        input_file="us-proxy.txt"  # 替换为实际文件路径
+        temp_file=$(mktemp)
+        
+        # 处理并排序
+        sed 's/^DOMAIN-SUFFIX, //' "$input_file" | sort -d > "$temp_file"
+        
+        # 重新添加前缀并覆盖原文件
+        sed 's/^/DOMAIN-SUFFIX, /' "$temp_file" > "$input_file"
+        rm -f "$temp_file"
+
+    - name: Commit changes
+      id: commit
+      run: |
+        if git diff --quiet; then
+          echo "::set-output name=has_changes::false"
+        else
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "🔀 Auto-sort domain suffixes"
+          echo "::set-output name=has_changes::true"
+        fi
+
+    - name: Push changes
+      if: steps.commit.outputs.has_changes == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
