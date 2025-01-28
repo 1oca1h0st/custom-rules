@@ -25,10 +25,10 @@ jobs:
         temp_file=$(mktemp)
         
         # 处理并排序
-        sed 's/^DOMAIN-SUFFIX, //' "$input_file" | sort -d > "$temp_file"
+        sed 's/^DOMAIN-SUFFIX,//' "$input_file" | sort -d > "$temp_file"
         
         # 重新添加前缀并覆盖原文件
-        sed 's/^/DOMAIN-SUFFIX, /' "$temp_file" > "$input_file"
+        sed 's/^/DOMAIN-SUFFIX,/' "$temp_file" > "$input_file"
         rm -f "$temp_file"
 
     - name: Commit changes
