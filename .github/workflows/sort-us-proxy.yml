@@ -5,6 +5,9 @@ on:
     paths:
       - 'us-proxy.txt'  # 请替换为实际文件路径
 
+permissions:
+    contents: write
+
 jobs:
   sort-domains:
     runs-on: ubuntu-latest
