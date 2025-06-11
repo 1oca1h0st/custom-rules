@@ -1,12 +1,9 @@
 DOMAIN-SUFFIX,bgp.he.net
 DOMAIN-SUFFIX,bloomberg.com
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,imgsur.com
 DOMAIN-SUFFIX,imgur.com
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,reddit.com
 DOMAIN-SUFFIX,sora.com
 DOMAIN-SUFFIX,tiktok.com
-DOMAIN-SUFFIX,wordpress.org
 DOMAIN-SUFFIX,wordpress.org
